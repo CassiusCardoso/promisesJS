@@ -1,34 +1,30 @@
-function randonNumber(min, max) {
-    min *= 1000; //Como o setTimetOut funciona em ms, está ocorrendo a multiplicação para converter o valor para segundos
-    max *= 1000; //Como o setTimetOut funciona em ms, está ocorrendo a multiplicação para converter o valor para segundos
+function randomNumber(min, max) {
+    min *= 1000;
+    max *= 1000;
 
     return Math.floor(Math.random() * (max - min) + min)
 }
 
-function examplePromise(msg, time) {
+function promise1(message, time) {
     return new Promise((resolve, reject) => {
-        if (typeof msg !== 'string') {
-            reject('Not a string')
-        }
-        setTimeout(() => {
-            resolve(msg)
+        if(typeof message !== 'string') return reject(new Error('Tá errado mano'))
+    setTimeout(() => {
+            resolve(message)
         }, time)
-    });
-}
+    })
+    };
 
-const promises = ['Promise teste 1',
-    examplePromise('Solo Levelling', 1000),
-    examplePromise('Kaiju no 8', 1200),
-    examplePromise('Attack On Titan', 2000),
-    'Promise teste 2'
-]
-
-Promise.all(promises)
-.then(function(valor){
-    console.log(valor)
-})
-.catch(function(error){
-    console.log(error)
-})
-
-
+promise1('Kaiju no 8', randomNumber(1, 5))
+.then(message => {
+        console.log(message)
+        return promise1('Solo Levelling', randomNumber(1, 5))
+    })
+    .then(message =>{
+        console.log(message)
+        return promise1('Attack On Titan', randomNumber(1, 5))
+    })
+    .then(message =>{
+        console.log(message)
+        return promise1(1 , randomNumber(1, 5))
+    })
+    .catch((e) => console.log(e))
